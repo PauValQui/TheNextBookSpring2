@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>The Next Book</title>
+	<link th:href="@{/../css/Header.css}" rel="stylesheet">
+	<link th:href="@{/../css/Footer.css}" rel="stylesheet">
+	<link th:href="@{/../css/View.css}" rel="stylesheet">
+</head>
+<body>
+	<div th:insert="fragments/Header :: header"></div>
+	
+	<div class="View"><!--A esta vista le doy le mando un libro especificado por su id-->
+        <div class="View__BoxImg">
+            <img th:src="@{/images/FotosLibros/} + ${libro.foto}" />
+        </div>
+        <div class="View__BoxDescription">
+            <p class="View__BoxDescription__Titulo" th:text="${libro.titulo}"></p>
+            <div class="View__BoxDescription__Autor">
+                <a th:href="@{/search/{busqueda} (busqueda = ${libro.autor.nombre})}" th:text="${libro.autor.nombre}"></a>
+            </div>
+            <div class="View__BoxDescription__Categoria">
+                <a th:href="@{/search/{busqueda} (busqueda = ${libro.categoria.tipo})}" th:text="${libro.categoria.tipo}"></a>
+            </div>
+            <p class="View__BoxDescription__Sinopsis" th:text="${libro.sinopsis}"></p>
+        </div>
+
+        <div class="View__ShopBox">
+            <p class="View__ShopBox__Titulo">Precio:</p>
+            <p class="View__ShopBox__Precio" th:text="${libro.precio}"></p>
+            
+            <!-- formulario en Laravel que manda la información a la cesta de compra.
+            <form action="{{ route('cart.add') }}" method="post"> <!-- En el boton añadir a la cesta mando la informacion oculta a un metodo para crear un nuevo item en cart
+                @csrf
+                <input type="hidden" name="id" value="{{$libro[0]->id}}">
+                <input type="hidden" name="name" value="{{$libro[0]->titulo}}">
+                <input type="hidden" name="price" value="{{$libro[0]->precio}}">
+                <input type="hidden" name="titulo" value="{{$libro[0]->titulo}}">
+                <input type="hidden" name="precio" value="{{$libro[0]->precio}}">
+                <input type="hidden" name="autor" value="{{$libro[0]->autor->nombre}}">
+                <input type="hidden" name="foto" value="{{$libro[0]->foto}}">
+                <input type="hidden" name="quantity" value="1">
+                <input type="submit" name="boton"  class="View__ShopBox__Boton" value="Añadir a la cesta">
+            </form> -->
+        </div>
+    </div>
+
+    
+
+        <!--Bucle valoraciones de este libro en el que muestro las valoraciones que hay relacionadas con este libro-->
+
+            <div class="ViewValuations">
+            	<div class="ViewValuations__BoxValuations">
+    	            <div class="ViewValuations__BoxValuations__Valuations">
+                        <p class="ViewValuations__BoxValuations__Valuations__Titulo" th:text="@{valoracion.titulo}"></p>
+                        <p class="ViewValuations__BoxValuations__Valuations__Puntuacion" th:text="@{valoracion.puntuacion}"></p>
+                        <div class="ViewValuations__BoxValuations__Valuations__Comentario">
+     	                   <p th:text="@{valoracion.comentario}"></p>
+                        </div>
+                     </div>
+  	              </div> 
+    	        </div>
+    		</div>
+	
+	<div th:insert="fragments/Footer :: footer"></div>
+</body>
+</html>
